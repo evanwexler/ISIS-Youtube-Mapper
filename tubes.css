@@ -1,0 +1,70 @@
+@import url(http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+@import url(http://fonts.googleapis.com/Raleway.css);
+
+body {
+padding-left: 10%;
+	background: #1a1a1a;
+	color:white; 
+	font-weight:100;
+	font-family: 'Raleway','Droid Arabic Naskh', sans-serif;
+	max-width: 90%;
+}
+
+h1 {font-size: 50px;font-weight:100; margin-bottom: 0px; margin-top: 20px; padding: 0; line-height: 1em;}
+h2 {font-size: 30px;font-weight:100; color: #6d6d6d; margin: 0px 0px 0px 0px; border-bottom: 1px solid #5a5a5a; max-width: 80%; padding: 0; line-height: 1.8em;}
+h3 {font-size: 22px;font-weight:100; color: #6d6d6d; padding: 0; margin: 20px 0px 0px 0px;line-height: 1.5em;}
+h4 {font-size: 16px;font-weight:100; color: #fff;}
+li {font-size: 12px;font-weight:100; color: #6d6d6d;}
+ul {margin:0 auto;padding: 0; text-align: left;color: #6d6d6d;}
+p {margin:0 auto;padding: 0; text-align: left;color: #6d6d6d;}
+
+span.highlight{color: #bbff00; font-size: .7em; margin: 0; padding: 0; line-height: 1em;}
+
+input{ border: none; width: 200px; height: 50px; font-size: 20px; font-family: 'Raleway','Droid Arabic Naskh', sans-serif; text-align: left; border-radius:5px; }
+
+.button{
+  background-image: -webkit-linear-gradient(top, #066f87 0%, #0587aa 100%);
+  background-image:  linear-gradient(to bottom, #066f87 0%, #0587aa 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#066f87', endColorstr='#0587aa', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-repeat: repeat-x;
+  width: 307px;
+  height:50px;
+  border-radius:5px;
+  border: none;
+  color: #fff;
+  font-family: 'Raleway','Droid Arabic Naskh', sans-serif;
+  font-size: 30px;
+  font-weight: 100;
+  margin-bottom: 200px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: #0587aa;
+  background-position: 0 -15px;
+}
+
+.suggestions{
+	width: 50%;
+	float:left;
+}
+
+.form{
+	width: 50%;
+	float:left;
+}
+
+.form-item{
+	margin-bottom: 20px;
+}
+.contain-results{
+	height:100%;
+	width:100%;
+	margin-top: 40px;
+}
+
+a{display: block; color:#9d9d9d; }
+.link{color:#fff;}
+.link:hover{opacity: .7;}
