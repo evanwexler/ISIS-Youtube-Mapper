@@ -1,11 +1,10 @@
 @import url(http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
-@import url(http://fonts.googleapis.com/Raleway.css);
 
 body {
-padding-left: 10%;
+padding-left: 5%;
 	background: #1a1a1a;
 	color:white; 
-	font-weight:100;
+	font-weight:400;
 	font-family: 'Raleway','Droid Arabic Naskh', sans-serif;
 	max-width: 90%;
 }
@@ -65,6 +64,15 @@ input{ border: none; width: 200px; height: 50px; font-size: 20px; font-family: '
 	margin-top: 40px;
 }
 
+div.result {min-width: 1400px;}
 a{display: block; color:#9d9d9d; }
 .link{color:#fff;}
 .link:hover{opacity: .7;}
+
+.video {float: left;}
+
+.map {width:640px; height:330px; margin: 0px 0px 100px 44px; border:none;} 
+
+#map-canvas { height: 300px; width: 500px;}
+
+p.geotags , p.id-print { margin-left:690px; margin-bottom: 10px;}

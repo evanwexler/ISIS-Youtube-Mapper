@@ -346,3 +346,33 @@ Stack trace:
 [19-Jun-2014 17:04:27 America/New_York] PHP Parse error:  syntax error, unexpected T_FOREACH in /home/evanwex/public_html/youtube-ISIS-search-php/index.php on line 86
 [19-Jun-2014 17:04:30 America/New_York] PHP Parse error:  syntax error, unexpected T_FOREACH in /home/evanwex/public_html/youtube-ISIS-search-php/index.php on line 86
 [19-Jun-2014 22:46:18 America/New_York] PHP Warning:  Unterminated comment starting line 3 in /home/evanwex/public_html/isis-video-tracker/index.php on line 3
+[23-Jun-2014 12:46:27 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:46:28 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:46:57 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:46:57 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:48:27 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:48:30 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:48:31 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:48:42 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:48:42 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:48:46 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:48:46 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:48:58 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:48:58 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:49:00 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:49:10 America/New_York] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/evanwex/public_html/ISIS/index.php on line 33
+[23-Jun-2014 12:49:10 America/New_York] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/evanwex/public_html/ISIS/index.php on line 33
+[23-Jun-2014 12:49:21 America/New_York] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/evanwex/public_html/ISIS/index.php on line 33
+[23-Jun-2014 12:49:23 America/New_York] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/evanwex/public_html/ISIS/index.php on line 33
+[23-Jun-2014 12:49:41 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 12:49:41 America/New_York] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/evanwex/public_html/ISIS/index.php on line 10
+[23-Jun-2014 15:04:27 America/New_York] PHP Fatal error:  Call to undefined function validateForm() in /home/evanwex/public_html/ISIS/index.php on line 28
+[23-Jun-2014 15:11:51 America/New_York] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/evanwex/public_html/ISIS/index.php on line 13
+[23-Jun-2014 15:12:42 America/New_York] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/evanwex/public_html/ISIS/index.php on line 13
+[23-Jun-2014 15:12:44 America/New_York] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/evanwex/public_html/ISIS/index.php on line 13
+[23-Jun-2014 15:13:46 America/New_York] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/evanwex/public_html/ISIS/index.php on line 13
+[23-Jun-2014 15:13:48 America/New_York] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/evanwex/public_html/ISIS/index.php on line 13
+[23-Jun-2014 15:14:20 America/New_York] PHP Parse error:  syntax error, unexpected T_ENCAPSED_AND_WHITESPACE, expecting T_STRING or T_VARIABLE or T_NUM_STRING in /home/evanwex/public_html/ISIS/index.php on line 13
+[23-Jun-2014 16:34:25 America/New_York] PHP Parse error:  syntax error, unexpected ';', expecting T_CATCH in /home/evanwex/public_html/ISIS/index.php on line 111
+[23-Jun-2014 16:34:39 America/New_York] PHP Parse error:  syntax error, unexpected '}', expecting T_CATCH in /home/evanwex/public_html/ISIS/index.php on line 109
+[23-Jun-2014 16:34:39 America/New_York] PHP Parse error:  syntax error, unexpected '}', expecting T_CATCH in /home/evanwex/public_html/ISIS/index.php on line 109

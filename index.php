@@ -1,25 +1,19 @@
 <?php
 
 /**
- * This sample lists videos that are associated with a particular keyword and are in the radius of
- *   particular geographic coordinates by:
- *
- * 1. Searching videos with "youtube.search.list" method and setting "type", "q", "location" and
- *   "locationRadius" parameters.
- * 2. Retrieving location details for each video with "youtube.videos.list" method and setting
- *   "id" parameter to comma separated list of video IDs in search result.
- *
- * @author Ibrahim Ulukaya
+ * Working from init examply by @author Ibrahim Ulukaya
  */
 
+/* Build initial form  to get some, gets called in the HTML further down */
+
 $htmlBody = <<<END
-<form method="GET" class="form">
+<form method="GET" class="form" form name="form">
 <h3> Search Fields <span class="highlight"></br>(You can replace text below, but all fields must be filled in)</span></h3>
   <div class="form-item">
-    Search Term: &nbsp<input type="search" class="searchbox" id="q" name="q" class="typeahead" value="ISIS">
+    Search Term: &nbsp<input type="search" class="searchbox" id="q" name="q" class="typeahead" placeholder="enter search term" >
   </div>
   <div class="form-item">
-    Coordinates: &nbsp <input type="text" id="location" name="location" placeholder="00.00000,00.00000" value="36.3400, 43.1300">
+    Coordinates: &nbsp <input type="text" id="location" name="location" placeholder="00.00000,00.00000" placeholder="36.3400, 43.1300">
   </div>
   <div class="form-item">
     Radius: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" id="locationRadius" name="locationRadius" value="1000km">
@@ -30,6 +24,8 @@ $htmlBody = <<<END
   <input type="submit" value="Search" class="button">
 </form>
 END;
+
+
 
 // This code executes if the user enters a search query in the form
 // and submits the form. Otherwise, the page displays the form above.
@@ -65,7 +61,7 @@ if ($_GET['q'] && $_GET['maxResults']) {
 
     $videoResults = array();
     
-    # Merge video ids
+    # Merge video ids for a list 
     foreach ($searchResponse['items'] as $searchResult) {
       array_push($videoResults, $searchResult['id']['videoId']);
     }
@@ -80,23 +76,18 @@ if ($_GET['q'] && $_GET['maxResults']) {
 
     $videos = '';
 
-    // Display the list of matching videos.
+    // Display the list of matching videos with embedded videos
     foreach ($videosResponse['items'] as $videoResult) {
-		
-     $videos .= sprintf('<div> <h4>%s</h4> <p><iframe width="640" height="390" src="http://www.youtube.com/embed/%s"></iframe></p> <p>Video Id Number: <span class="highlight" style="font-size:1.5em;">%s</span></p><p>Geotags (lat, long) :  (%s,%s)</p></div>',
+		$a++;
+     $videos .= sprintf('<div class="result"> <h4>%s</h4> <p><iframe class ="video" width="640" height="390" src="http://www.youtube.com/embed/%s"></iframe></p> <p class="id-print">Video Id Number: <span class="highlight" style="font-size:1.5em;">%s</span></p><p class="geotags">Geotags (lat, long) : (%s,%s)</p> <iframe class="map" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD7o4gDHBjZ9ekU5BHWwR3P0jdZdv4EMxU&q=%s,%s"></iframe> </div> ',
 	      $videoResult['snippet']['title'],
 	      $videoResult['id'], // This line returns the video id for the embed code
-	      $videoResult['id'], 
+	      $videoResult['id'], // This line returns the video id to print out underneath the video window, for reference
 	      $videoResult['recordingDetails']['location']['latitude'],
+          $videoResult['recordingDetails']['location']['longitude'],
+          $videoResult['recordingDetails']['location']['latitude'],
           $videoResult['recordingDetails']['location']['longitude']);
               
-     /*
-$videos .= sprintf('<li>%s (%s,%s) || %d</li>',
-          $videoResult['snippet']['title'],
-          $videoResult['recordingDetails']['location']['latitude'],
-          $videoResult['recordingDetails']['location']['longitude'],
-          $videoResult['recordingDetails']['recordingDate']);
-*/
     }
 
     $htmlBody .= <<<END
@@ -104,26 +95,30 @@ $videos .= sprintf('<li>%s (%s,%s) || %d</li>',
     <ul>$videos</ul>
     </div>
 END;
+
+/* throw some error when things go awry */
+
   } catch (Google_ServiceException $e) {
-    $htmlBody .= sprintf('<p>A service error occurred: <code>%s</code></p>',
+    $htmlBody .= sprintf('<p>IGNORE. THIS IS FOR EVAN: A service error occurred: <code>%s</code></p>',
         htmlspecialchars($e->getMessage()));
   } catch (Google_Exception $e) {
-    $htmlBody .= sprintf('<p>An client error occurred: <code>%s</code></p>',
+    $htmlBody .= sprintf('<p>IGNORE. THIS IS FOR EVAN: An client error occurred: <code>%s</code></p>',
         htmlspecialchars($e->getMessage()));
   }
 }
 ?>
 
+<!-- Rest of HTML for the page -->
 <!doctype html>
 <html>
 <head>
-
+<link href='http://fonts.googleapis.com/css?family=Raleway:100,200,400' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="tubes.css">
   <meta charset="UTF-8">
 <title>youtube vid search tool</title>
 </head>
 <body>
-<h1>YOUTUBE GEO SEARCH TOOL _V 1.0</h1>
+<h1>YOUTUBE GEO SEARCH TOOL _V 1.1</h1>
 <h2>Find videos about a subject within a specified geographic radius</h2>
 <div class= "suggestions">
 	<h3> Some possible Search Terms <br/><span class="highlight">(Highlight and copy these for now)</span></h3>
@@ -144,12 +139,43 @@ END;
 	<a> Ar-Raqqah:  <span class="link">35.9500, 39.0167</span> </a>
 	<a> Al-Bukamal:  <span class="link">34.4536, 40.9367</span> </a>
 	<a href="http://dateandtime.info/citycoordinates.php" target="_blank"> <span class="link"> Find new city coordinates</span></a>
-
+	
 </div>
 <?=$htmlBody?>
 </body>
 </html>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script type="text/javascript"> 
 
 
+$( ".button" ).click(function() {
+  validateForm();
+});
 
+function validateForm() {
+    var x = document.forms["form"]["q"].value;
+    var y = document.forms["form"]["location"].value;
+    if (x == null || x == "" || y == null || y == "" ) {
+        alert("Sorry. All fields must be filled out to search. :(");
+        return false;
+    }
+}
+
+
+/* Make me some maps */
+/*
+function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(-34.397, 150.644),
+          zoom: 8
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+      }
+      google.maps.event.addDomListener(window, 'load', initialize);
+*/
+
+
+</script> 
