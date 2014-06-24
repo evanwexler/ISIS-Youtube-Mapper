@@ -2,16 +2,8 @@
 <?php
 
 /**
- * This sample lists videos that are associated with a particular keyword and are in the radius of
- *   particular geographic coordinates by:
- *
- * 1. Searching videos with "youtube.search.list" method and setting "type", "q", "location" and
- *   "locationRadius" parameters.
- * 2. Retrieving location details for each video with "youtube.videos.list" method and setting
- *   "id" parameter to comma separated list of video IDs in search result.
- *
- * @author Ibrahim Ulukaya
- */
+Init reference for geo youtube v3 Ibrahim Ulukaya + 
+**/
 
 
 $htmlBody = <<<END
@@ -45,7 +37,7 @@ if ($_GET['q'] && $_GET['maxResults']) {
      * {{ Google Cloud Console }} <{{ https://cloud.google.com/console }}>
      * Please ensure that you have enabled the YouTube Data API for your project.
      */
-    
+    //Evan's dev key
     $DEVELOPER_KEY = 'AIzaSyD7o4gDHBjZ9ekU5BHWwR3P0jdZdv4EMxU';
     
     $client = new Google_Client();
@@ -62,11 +54,13 @@ if ($_GET['q'] && $_GET['maxResults']) {
         // Call the search.list method to retrieve results matching the specified
         // query term.
         $searchResponse = $youtube->search->listSearch('id,snippet', array(
-            'type' => 'video',
-            'q' => $_GET['q'],
-            'location' => $_GET['location'],
-            'locationRadius' => $_GET['locationRadius'],
-            'maxResults' => $_GET['maxResults']
+           'type' => 'video',
+		   'videoType' => 'any',
+		   'order' => 'date',
+		   'q' => $_GET['q'],
+		   'location' =>  $_GET['location'],
+		   'locationRadius' =>  $_GET['locationRadius'],
+		   'maxResults' => $_GET['maxResults'],
         ));
         
         $videoResults = array();
@@ -92,14 +86,6 @@ if ($_GET['q'] && $_GET['maxResults']) {
             
             $videos .= sprintf('<li class="videos"><div><h4>%s</h4><p><iframe width="500" height="281" src="http://www.youtube.com/embed/%s"></iframe></p> <p class="metadata">Video Id Number: <span class="highlight" style="font-size:1.5em;">%s</span></p><p class="metadata">Geotags (lat, long) :  (%s,%s)</p></div></li>', $videoResult['snippet']['title'], $videoResult['id'], // This line returns the video id for the embed code
                 $videoResult['id'], $videoResult['recordingDetails']['location']['latitude'], $videoResult['recordingDetails']['location']['longitude']);
-            
-            /*
-            $videos .= sprintf('<li>%s (%s,%s) || %d</li>',
-            $videoResult['snippet']['title'],
-            $videoResult['recordingDetails']['location']['latitude'],
-            $videoResult['recordingDetails']['location']['longitude'],
-            $videoResult['recordingDetails']['recordingDate']);
-            */
           
 		// create json for mapbox -ty
            $locations[] = array("videoID" => $videoResult['id'], "latitude" => $videoResult['recordingDetails']['location']['latitude'], "longitude" => $videoResult['recordingDetails']['location']['longitude']);
@@ -165,7 +151,7 @@ END;
 			 
 			 function newMap() {
 			 var markers = [];
-			 var map = L.mapbox.map('map', 'explaincorp.ije5ea3a', { zoomControl: false }).setView([34.08, 41.666], 5);
+			 var map = L.mapbox.map('map', 'explaincorp.ije5ea3a', { zoomControl: false }).setView([34.08, 41.666], 6);
 			 for (i=0; i < locations.length; i++) {
 				 markers[i] = new L.Marker(new L.LatLng(locations[i].latitude, locations[i].longitude)).bindPopup("<a href='https://www.youtube.com/watch?v="+locations[i].videoID+"' target='_blank'>"+locations[i].videoID+"</a>");
 				 map.addLayer(markers[i]);
@@ -195,7 +181,8 @@ END;
          <a class="link"> ISIL <a>
          <a class="link"> داعش </a>
          <a class="link"> الدولة الإسلامية في العراق والشام</a>
-         <h3> Some possible Coordinates <br/>(in decimal degrees)<br/><span class="highlight">(Highlight and copy these for now)</span></h3>
+         <h3>Some possible Coordinates <br/>(in decimal degrees)<br/><span class="highlight">(Highlight and copy these for now)</span></h3>
+         <a> Baiji (Oil Refinery): <span class="link">34.9292, 43.4931</span> </a>
          <a> Mosul: <span class="link">36.3400, 43.1300</span> </a>
          <a> Fallujah: <span class="link">33.3500, 43.7833</span> </a>
          <a> Tikrit: <span class="link">34.6000, 43.6833</span> </a>
