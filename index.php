@@ -53,6 +53,8 @@ if ($_GET['q'] && $_GET['maxResults']) {
     // query term.
     $searchResponse = $youtube->search->listSearch('id,snippet', array(
         'type' => 'video',
+        'videoType' => 'any',
+        'order' => 'date',
         'q' => $_GET['q'],
         'location' =>  $_GET['location'],
         'locationRadius' =>  $_GET['locationRadius'],
@@ -130,7 +132,7 @@ END;
 	<a class="link"> الدولة الإسلامية في العراق والشام</a>
 
 	<h3> Some possible Coordinates (in decimal degrees)<br/><span class="highlight">(Highlight and copy these for now)</span></h3>
-	
+	<a> Baiji (Oil Refinery): <span class="link">34.9292, 43.4931</span> </a>
 	<a> Mosul: <span class="link">36.3400, 43.1300</span> </a>
 	<a> Fallujah: <span class="link">33.3500, 43.7833</span> </a>
 	<a> Tikrit: <span class="link">34.6000, 43.6833</span> </a>
