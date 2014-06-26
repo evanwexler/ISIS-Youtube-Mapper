@@ -1,19 +1,19 @@
+
 <?php
 
 /**
- * Working from init examply by @author Ibrahim Ulukaya
- */
+Init reference for geo youtube v3 Ibrahim Ulukaya + 
+**/
 
-/* Build initial form  to get some, gets called in the HTML further down */
 
 $htmlBody = <<<END
-<form method="GET" class="form" form name="form">
+<form method="GET" class="form">
 <h3> Search Fields <span class="highlight"></br>(You can replace text below, but all fields must be filled in)</span></h3>
   <div class="form-item">
-    Search Term: &nbsp<input type="search" class="searchbox" id="q" name="q" class="typeahead" placeholder="enter search term" >
+    Search Term: &nbsp<input type="search" class="searchbox" id="q" name="q" class="typeahead" value="ISIS">
   </div>
   <div class="form-item">
-    Coordinates: &nbsp <input type="text" id="location" name="location" placeholder="00.00000,00.00000" placeholder="36.3400, 43.1300">
+    Coordinates: &nbsp <input type="text" id="location" name="location" placeholder="00.00000,00.00000" value="36.3400, 43.1300">
   </div>
   <div class="form-item">
     Radius: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp<input type="text" id="locationRadius" name="locationRadius" value="1000km">
@@ -25,159 +25,175 @@ $htmlBody = <<<END
 </form>
 END;
 
-
-
 // This code executes if the user enters a search query in the form
 // and submits the form. Otherwise, the page displays the form above.
 if ($_GET['q'] && $_GET['maxResults']) {
-  // Call set_include_path() as needed to point to your client library.
-  require_once 'Google/Client.php';
-  require_once 'Google/Service/YouTube.php';
-
-  /*
-   * Set $DEVELOPER_KEY to the "API key" value from the "Access" tab of the
-  * {{ Google Cloud Console }} <{{ https://cloud.google.com/console }}>
-  * Please ensure that you have enabled the YouTube Data API for your project.
-  */
-  
-  $DEVELOPER_KEY = 'AIzaSyD7o4gDHBjZ9ekU5BHWwR3P0jdZdv4EMxU';
-
-  $client = new Google_Client();
-  $client->setDeveloperKey($DEVELOPER_KEY);
-
-  // Define an object that will be used to make all API requests.
-  $youtube = new Google_Service_YouTube($client);
-
-  try {
-    // Call the search.list method to retrieve results matching the specified
-    // query term.
-    $searchResponse = $youtube->search->listSearch('id,snippet', array(
-        'type' => 'video',
-        'videoType' => 'any',
-        'order' => 'date',
-        'q' => $_GET['q'],
-        'location' =>  $_GET['location'],
-        'locationRadius' =>  $_GET['locationRadius'],
-        'maxResults' => $_GET['maxResults'],
-    ));
-
-    $videoResults = array();
+    // Call set_include_path() as needed to point to your client library.
+    require_once 'Google/Client.php';
+    require_once 'Google/Service/YouTube.php';
     
-    # Merge video ids for a list 
-    foreach ($searchResponse['items'] as $searchResult) {
-      array_push($videoResults, $searchResult['id']['videoId']);
-    }
+    /*
+     * Set $DEVELOPER_KEY to the "API key" value from the "Access" tab of the
+     * {{ Google Cloud Console }} <{{ https://cloud.google.com/console }}>
+     * Please ensure that you have enabled the YouTube Data API for your project.
+     */
+    //Evan's dev key
+    $DEVELOPER_KEY = 'AIzaSyD7o4gDHBjZ9ekU5BHWwR3P0jdZdv4EMxU';
     
-    $videoIds = join(',', $videoResults);
+    $client = new Google_Client();
+    $client->setDeveloperKey($DEVELOPER_KEY);
     
-   
-    # Call the videos.list method to retrieve location details for each video.
-    $videosResponse = $youtube->videos->listVideos('snippet, recordingDetails', array(
-    'id' => $videoIds,
-    ));
-
-    $videos = '';
-
-    // Display the list of matching videos with embedded videos
-    foreach ($videosResponse['items'] as $videoResult) {
-		$a++;
-     $videos .= sprintf('<div class="result"> <h4>%s</h4> <p><iframe class ="video" width="640" height="390" src="http://www.youtube.com/embed/%s"></iframe></p> <p class="id-print">Video Id Number: <span class="highlight" style="font-size:1.5em;">%s</span></p><p class="geotags">Geotags (lat, long) : (%s,%s)</p> <iframe class="map" frameborder="0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD7o4gDHBjZ9ekU5BHWwR3P0jdZdv4EMxU&q=%s,%s"></iframe> </div> ',
-	      $videoResult['snippet']['title'],
-	      $videoResult['id'], // This line returns the video id for the embed code
-	      $videoResult['id'], // This line returns the video id to print out underneath the video window, for reference
-	      $videoResult['recordingDetails']['location']['latitude'],
-          $videoResult['recordingDetails']['location']['longitude'],
-          $videoResult['recordingDetails']['location']['latitude'],
-          $videoResult['recordingDetails']['location']['longitude']);
-              
-    }
-
-    $htmlBody .= <<<END
+    // Define an object that will be used to make all API requests.
+    $youtube = new Google_Service_YouTube($client);
+    
+ 
+    // array for map
+    $locations = array();        
+        
+    try {
+        // Call the search.list method to retrieve results matching the specified
+        // query term.
+        $searchResponse = $youtube->search->listSearch('id,snippet', array(
+           'type' => 'video',
+		   'videoType' => 'any',
+		   'order' => 'date',
+		   'q' => $_GET['q'],
+		   'location' =>  $_GET['location'],
+		   'locationRadius' =>  $_GET['locationRadius'],
+		   'maxResults' => $_GET['maxResults'],
+        ));
+        
+        $videoResults = array();
+        
+        # Merge video ids
+        foreach ($searchResponse['items'] as $searchResult) {
+            array_push($videoResults, $searchResult['id']['videoId']);
+        }
+        
+        $videoIds = join(',', $videoResults);
+        
+        
+        # Call the videos.list method to retrieve location details for each video.
+        $videosResponse = $youtube->videos->listVideos('snippet, recordingDetails', array(
+            'id' => $videoIds
+        ));
+        
+        $videos = '';
+               
+                
+        // Display the list of matching videos.
+        foreach ($videosResponse['items'] as $videoResult) {
+            
+            $videos .= sprintf('<li class="videos"><div><h4>%s</h4><p><iframe width="500" height="281" src="http://www.youtube.com/embed/%s"></iframe></p> <p class="metadata">Video Id Number: <span class="highlight" style="font-size:1.5em;">%s</span></p><p class="metadata">Geotags (lat, long) :  (%s,%s)</p></div></li>', $videoResult['snippet']['title'], $videoResult['id'], // This line returns the video id for the embed code
+                $videoResult['id'], $videoResult['recordingDetails']['location']['latitude'], $videoResult['recordingDetails']['location']['longitude']);
+          
+		// create json for mapbox -ty
+           $locations[] = array("videoID" => $videoResult['id'], "latitude" => $videoResult['recordingDetails']['location']['latitude'], "longitude" => $videoResult['recordingDetails']['location']['longitude']);
+           
+        }
+        
+        $htmlBody .= <<<END
+    <div class='clear'></div>
     <div class="contain-results">
-    <ul>$videos</ul>
+    <div id="map" class="dark">
+    </div>
+    <ul>
+    $videos
+    <div class='clear'></div>
+    </ul>
     </div>
 END;
-
-/* throw some error when things go awry */
-
-  } catch (Google_ServiceException $e) {
-    $htmlBody .= sprintf('<p>IGNORE. THIS IS FOR EVAN: A service error occurred: <code>%s</code></p>',
-        htmlspecialchars($e->getMessage()));
-  } catch (Google_Exception $e) {
-    $htmlBody .= sprintf('<p>IGNORE. THIS IS FOR EVAN: An client error occurred: <code>%s</code></p>',
-        htmlspecialchars($e->getMessage()));
-  }
-}
-?>
-
-<!-- Rest of HTML for the page -->
-<!doctype html>
-<html>
-<head>
-<link href='http://fonts.googleapis.com/css?family=Raleway:100,200,400' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="tubes.css">
-  <meta charset="UTF-8">
-<title>youtube vid search tool</title>
-</head>
-<body>
-<h1>YOUTUBE GEO SEARCH TOOL _V 1.1</h1>
-<h2>Find videos about a subject within a specified geographic radius</h2>
-<div class= "suggestions">
-	<h3> Some possible Search Terms <br/><span class="highlight">(Highlight and copy these for now)</span></h3>
-	<a class="link"> isis </a>
-	<a class="link"> isil <a>
-	<a class="link"> ISIS <a>
-	<a class="link"> ISIL <a>
-	<a class="link"> داعش </a>
-	<a class="link"> الدولة الإسلامية في العراق والشام</a>
-
-	<h3> Some possible Coordinates (in decimal degrees)<br/><span class="highlight">(Highlight and copy these for now)</span></h3>
-	<a> Baiji (Oil Refinery): <span class="link">34.9292, 43.4931</span> </a>
-	<a> Mosul: <span class="link">36.3400, 43.1300</span> </a>
-	<a> Fallujah: <span class="link">33.3500, 43.7833</span> </a>
-	<a> Tikrit: <span class="link">34.6000, 43.6833</span> </a>
-	<a> Erbil: <span class="link">36.19111, 44.00917</span> </a>
-	<a> Deir ez-Zor Governorate:  <span class="link">35.3360, 40.1450</span> </a>
-	<a> Ar-Raqqah:  <span class="link">35.9500, 39.0167</span> </a>
-	<a> Al-Bukamal:  <span class="link">34.4536, 40.9367</span> </a>
-	<a href="http://dateandtime.info/citycoordinates.php" target="_blank"> <span class="link"> Find new city coordinates</span></a>
-	
-</div>
-<?=$htmlBody?>
-</body>
-</html>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-<script type="text/javascript"> 
-
-
-$( ".button" ).click(function() {
-  validateForm();
-});
-
-function validateForm() {
-    var x = document.forms["form"]["q"].value;
-    var y = document.forms["form"]["location"].value;
-    if (x == null || x == "" || y == null || y == "" ) {
-        alert("Sorry. All fields must be filled out to search. :(");
-        return false;
+    }
+    catch (Google_ServiceException $e) {
+        $htmlBody .= sprintf('<p>A service error occurred: <code>%s</code></p>', htmlspecialchars($e->getMessage()));
+    }
+    catch (Google_Exception $e) {
+        $htmlBody .= sprintf('<p>An client error occurred: <code>%s</code></p>', htmlspecialchars($e->getMessage()));
     }
 }
 
+?>
 
-/* Make me some maps */
-/*
-function initialize() {
-        var mapOptions = {
-          center: new google.maps.LatLng(-34.397, 150.644),
-          zoom: 8
-        };
-        var map = new google.maps.Map(document.getElementById("map-canvas"),
-            mapOptions);
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-*/
+<!doctype html>
+<html>
+   <head>
+   	  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.js'></script>
+   	  <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.4/mapbox.css' rel='stylesheet' />
+   	  <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+      <link rel="stylesheet" type="text/css" href="tubes.css">
+      <meta charset="UTF-8">
+      <title>youtube vid search tool</title>
+      <script type="text/javascript">
+         var locations = <?php echo json_encode($locations); ?>;
+         var geojson = [{"type":"FeatureCollection","features":[]}];
+         
+         $(document).ready(function() {
+         
+         	 function initData() {
+	         for (i=0;i<locations.length;i++) {
+	         	geojson[0].features.push({"type":"Feature","properties":{"title":"video","marker-color":"#ff0000","marker-size":"large","url": "https://www.youtube.com/watch?v="+locations[i].videoID},"geometry":{"type":"Point","coordinates":[locations[i].latitude,locations[i].longitude]}});  
+	         	//console.log(locations[i].longitude+" "+locations[i].latitude)
+			 }
 
+			 newMap();
+			 }
+			 function initMap() {
 
-</script> 
+		     var map = L.mapbox.map('map', 'explaincorp.ije5ea3a').setView([21.453, 80.684], 3);
+		     var myLayer = L.mapbox.featureLayer().addTo(map);
+		     myLayer.setGeoJSON(geojson);
+		     myLayer.on('click', function (e) {
+		     e.layer.unbindPopup();
+		     window.open(e.layer.feature.properties.url);
+			 });
+			 }
+			 
+			 function newMap() {
+			 var markers = [];
+			 var map = L.mapbox.map('map', 'explaincorp.ije5ea3a', { zoomControl: false }).setView([34.08, 41.666], 6);
+			 for (i=0; i < locations.length; i++) {
+				 markers[i] = new L.Marker(new L.LatLng(locations[i].latitude, locations[i].longitude)).bindPopup("<a href='https://www.youtube.com/watch?v="+locations[i].videoID+"' target='_blank'>"+locations[i].videoID+"</a>");
+				 map.addLayer(markers[i]);
+			 }
+			 map.dragging.disable();
+    		map.touchZoom.disable();
+			map.doubleClickZoom.disable();
+			map.scrollWheelZoom.disable();
+			
+			// Disable tap handler, if present.
+			if (map.tap) map.tap.disable();
+			 }
+			 initData();
+
+	     });
+      </script>
+   </head>
+   <body>
+	   <div class="top">
+      <h1>YouTube GeoSearch Tool 1.0</h1>
+      <h2>Find videos about a subject within a specified geographic radius</h2>
+      <div class="suggestions">
+         <h3> Some possible Search Terms <br/><span class="highlight">(Highlight and copy these for now)</span></h3>
+         <a class="link"> isis </a>
+         <a class="link"> isil <a>
+         <a class="link"> ISIS <a>
+         <a class="link"> ISIL <a>
+         <a class="link"> داعش </a>
+         <a class="link"> الدولة الإسلامية في العراق والشام</a>
+         <h3>Some possible Coordinates <br/>(in decimal degrees)<br/><span class="highlight">(Highlight and copy these for now)</span></h3>
+         <a> Baiji (Oil Refinery): <span class="link">34.9292, 43.4931</span> </a>
+         <a> Mosul: <span class="link">36.3400, 43.1300</span> </a>
+         <a> Fallujah: <span class="link">33.3500, 43.7833</span> </a>
+         <a> Tikrit: <span class="link">34.6000, 43.6833</span> </a>
+         <a> Erbil: <span class="link">36.19111, 44.00917</span> </a>
+         <a> Deir ez-Zor Governorate:  <span class="link">35.3360, 40.1450</span> </a>
+         <a> Ar-Raqqah:  <span class="link">35.9500, 39.0167</span> </a>
+         <a> Al-Bukamal:  <span class="link">34.4536, 40.9367</span> </a>
+         <a href="http://dateandtime.info/citycoordinates.php" target="_blank"> <span class="link"> Find new city coordinates</span></a>
+      </div>
+      </div>
+     
+      <?= $htmlBody ?>
+   </body>
+</html>

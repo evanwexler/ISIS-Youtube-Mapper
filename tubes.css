@@ -1,16 +1,15 @@
 @import url(http://fonts.googleapis.com/earlyaccess/droidarabicnaskh.css);
+@import url(http://fonts.googleapis.com/Raleway.css);
 
 body {
-padding-left: 5%;
 	background: #1a1a1a;
 	color:white; 
-	font-weight:400;
+	font-weight:100;
 	font-family: 'Raleway','Droid Arabic Naskh', sans-serif;
-	max-width: 90%;
 }
 
 h1 {font-size: 50px;font-weight:100; margin-bottom: 0px; margin-top: 20px; padding: 0; line-height: 1em;}
-h2 {font-size: 30px;font-weight:100; color: #6d6d6d; margin: 0px 0px 0px 0px; border-bottom: 1px solid #5a5a5a; max-width: 80%; padding: 0; line-height: 1.8em;}
+h2 {font-size: 30px;font-weight:100; color: #6d6d6d; margin: 0px 0px 0px 0px; border-bottom: 1px solid #5a5a5a;padding: 0; line-height: 1.8em;}
 h3 {font-size: 22px;font-weight:100; color: #6d6d6d; padding: 0; margin: 20px 0px 0px 0px;line-height: 1.5em;}
 h4 {font-size: 16px;font-weight:100; color: #fff;}
 li {font-size: 12px;font-weight:100; color: #6d6d6d;}
@@ -35,7 +34,7 @@ input{ border: none; width: 200px; height: 50px; font-size: 20px; font-family: '
   font-family: 'Raleway','Droid Arabic Naskh', sans-serif;
   font-size: 30px;
   font-weight: 100;
-  margin-bottom: 200px;
+  margin-bottom: 70px;
   cursor: pointer;
   text-align: center;
 }
@@ -45,34 +44,31 @@ input{ border: none; width: 200px; height: 50px; font-size: 20px; font-family: '
   background-position: 0 -15px;
 }
 
-.suggestions{
-	width: 50%;
-	float:left;
+.suggestions {
+	width: 400px;float:left;text-align:left;margin-left:20%
 }
 
 .form{
-	width: 50%;
+	width: 300px;
 	float:left;
 }
 
 .form-item{
 	margin-bottom: 20px;
 }
-.contain-results{
-	height:100%;
-	width:100%;
-	margin-top: 40px;
-}
+.contain-results { width:1200px;margin:0px auto}
 
-div.result {min-width: 1400px;}
 a{display: block; color:#9d9d9d; }
 .link{color:#fff;}
 .link:hover{opacity: .7;}
 
-.video {float: left;}
+.clear { clear:both}
 
-.map {width:640px; height:330px; margin: 0px 0px 100px 44px; border:none;} 
-
-#map-canvas { height: 300px; width: 500px;}
-
-p.geotags , p.id-print { margin-left:690px; margin-bottom: 10px;}
+.top { width:1200px;margin:0px auto;text-align: center}
+ul { list-style-type:none;padding:0px;width:1200px;margin:0px auto;}
+li { float:left;width:600px;margin:0px auto;text-align:center}
+li h4 { height:15px;font-size:14px;display:none;}
+li div { width:500px; margin:0px auto 50px auto}
+iframe { border:none;}
+.metadata { display:none}
+#map { width:1100px;margin:20px auto 70px auto;height:550px}
